@@ -6,18 +6,21 @@ class JsonObject
         // We will have parametrized container
         JsonObject(T* object): pointer_container(object)
         {
+		release_pointer = NULL;
         }
 	
 	JsonObject()
 	{
 		pointer_container = NULL;	
+		release_pointer = NULL;
 	}
         // Object specific destructor which will call the user 
         // set call back function to release the allocated memory 
         ~JsonObject()
 	{
 		if(pointer_container)
-			release_pointer(pointer_container);
+			if(release_pointer)
+				release_pointer(pointer_container);
 
 	}
 
